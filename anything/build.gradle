@@ -56,6 +56,10 @@ project(':anything-api') {
 	dependencies {
 		implementation project(':anything-common')
 		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.5'
+		implementation 'io.springfox:springfox-boot-starter:3.0.0'
+		implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 	}
 }
 
@@ -63,5 +67,7 @@ project(':anything-web') {
 	dependencies {
 		implementation project(':anything-common')
 		implementation 'org.springframework.boot:spring-boot-starter-web'
+		implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+		implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.5'
 	}
 }
