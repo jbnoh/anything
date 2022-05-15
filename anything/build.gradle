@@ -21,7 +21,7 @@ subprojects {
 
 	group = 'com.anything'
 	version = '1.0.0-SNAPSHOT'
-	sourceCompatibility = '1.8'
+	sourceCompatibility = '11'
 
 	task initSourceFolders {
 		sourceSets*.java.srcDirs*.each {
