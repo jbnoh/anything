@@ -20,12 +20,13 @@ public class MvcConfig implements WebMvcConfigurer {
 		excludePath.add("/fonts/**");
 		excludePath.add("/plugin/**");
 		excludePath.add("/scripts/**");
+		excludePath.add("/favicon.ico");
 	}
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 
 		registry.addInterceptor(new ServletInterceptor())
-		.excludePathPatterns(excludePath);
+				.excludePathPatterns(excludePath);
 	}
 }
