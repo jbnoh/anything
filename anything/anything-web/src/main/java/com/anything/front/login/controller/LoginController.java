@@ -5,7 +5,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.anything.bind.annotation.SupportData;
 import com.anything.front.login.service.LoginService;
+import com.anything.vo.Data;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,7 +25,7 @@ public class LoginController {
 	}
 
 	@PostMapping
-	public String execute() {
+	public String execute(@SupportData Data data) {
 
 		loginService.loginExecute();
 		return "/main/view";

@@ -27,7 +27,7 @@ public class CustomExceptionAdvice {
 		log.error(String.format("%s", logging(req)), e);
 	}
 
-	@ExceptionHandler(Exception.class)
+	@ExceptionHandler(CustomException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public void handler(HttpServletRequest req, CustomException e) {
 

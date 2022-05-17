@@ -50,7 +50,10 @@ subprojects {
 
 		implementation 'org.slf4j:jcl-over-slf4j'
 		implementation 'ch.qos.logback:logback-classic'
+		implementation 'org.json:org.json:chargebee-1.0'
 		implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+		implementation 'org.apache.commons:commons-lang3:3.12.0'
+		implementation 'commons-io:commons-io:2.11.0'
 	}
 }
 
