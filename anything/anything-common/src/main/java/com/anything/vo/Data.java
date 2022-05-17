@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.json.JSONObject;
 import org.springframework.util.ObjectUtils;
 
 @SuppressWarnings("rawtypes")
@@ -73,6 +74,57 @@ public class Data extends HashMap<Object, Object> {
 		return null;
 	}
 
+	public static Data toData(JSONObject jsonObj) throws Exception {
+
+		Data data = new Data();
+
+		Iterator<?> keys = jsonObj.keys();
+		while (keys.hasNext()) {
+			String key = (String) keys.next();
+			Object value = jsonObj.get(key);
+
+			if (value instanceof Map) {
+				data.put(key, toMap((JSONObject) value));
+			} else {
+				data.put(key, value);
+			}
+		}
+
+		jsonObjValueNullCheck(data);
+		return data;
+	}
+
+	public static Data toData(String jsonStr) throws Exception {
+
+		return toData(new JSONObject(jsonStr));
+	}
+
+	public void putJsonString(String jsonStr) {
+
+		try {
+			Map<String, Object> map = toMap(jsonStr);
+
+			for (String key : map.keySet()) {
+				this.put(key, map.get(key));
+			}
+		} catch (Exception e) {}
+	}
+
+	public Data getData(String key) {
+
+		Object obj = this.get(key);
+
+		try {
+			if (obj instanceof JSONObject) {
+				return toData((JSONObject) obj);
+			} else {
+				return (Data) obj;
+			}
+		} catch (Exception e) {}
+
+		return null;
+	}
+
 	public String getString(Object key) {
 
 		Object obj = this.get(key);
@@ -82,6 +134,15 @@ public class Data extends HashMap<Object, Object> {
 		} catch (Exception e) {}
 
 		return "";
+	}
+
+	public float getFloat(Object key) {
+
+		try {
+			return Float.valueOf(this.getString(key)).floatValue();
+		} catch (Exception e) {}
+
+		return 0;
 	}
 
 	public int getInt(Object key) {
@@ -108,13 +169,49 @@ public class Data extends HashMap<Object, Object> {
 		return 0;
 	}
 
-	public long getDouble(Object key) {
+	public double getDouble(Object key) {
 
 		try {
-			return Double.valueOf(this.getString(key));
+			return Double.valueOf(this.getString(key)).doubleValue();
 		} catch (Exception e) {}
 
 		return 0;
+	}
+
+	private static Map<String, Object> toMap(JSONObject jsonObj) throws Exception {
+
+		Map<String, Object> map = new HashMap<>();
+
+		Iterator<?> keys = jsonObj.keys();
+		while (keys.hasNext()) {
+			String key = (String) keys.next();
+			Object value = jsonObj.get(key);
+
+			if (value instanceof Map) {
+				map.put(key, toMap((JSONObject) value));
+			} else {
+				map.put(key, value);
+			}
+		}
+
+		jsonObjValueNullCheck(map);
+		return map;
+	}
+
+	private static Map<String, Object> toMap(String jsonStr) throws Exception {
+
+		return toMap(new JSONObject(jsonStr));
+	}
+
+	private static void jsonObjValueNullCheck(Map<?, Object> map) {
+
+		try {
+			for (Entry<?, Object> e : map.entrySet()) {
+				if (e.getValue() == JSONObject.NULL) {
+					e.setValue("");
+				}
+			}
+		} catch (Exception e) {}
 	}
 
 	private String convertCamelCaseToUnderscores(Object key) {

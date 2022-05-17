@@ -1,32 +1,33 @@
 package com.anything.config;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import com.anything.bind.DataArgumentResolver;
 import com.anything.interceptor.ServletInterceptor;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration
+@RequiredArgsConstructor
 public class MvcConfig implements WebMvcConfigurer {
 
-	private final List<String> excludePath = new ArrayList<>();
-
-	public MvcConfig() {
-
-		excludePath.add("/css/**");
-		excludePath.add("/fonts/**");
-		excludePath.add("/plugin/**");
-		excludePath.add("/scripts/**");
-		excludePath.add("/favicon.ico");
-	}
+	private final DataArgumentResolver dataResolver;
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 
 		registry.addInterceptor(new ServletInterceptor())
-				.excludePathPatterns(excludePath);
+				.excludePathPatterns("/css/**", "/fonts/**", "/plugin/**", "/scripts/**", "/favicon.ico");
+	}
+
+	@Override
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+
+		resolvers.add(dataResolver);
 	}
 }
