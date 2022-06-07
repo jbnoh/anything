@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.anything.db.jpa.user.entity.UserVo;
-import com.anything.db.jpa.user.service.UserService;
+import com.anything.db.jpa.user.entity.UserEntity;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,8 +16,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JoinController {
 
-	private final UserService userService;
-
 	@GetMapping
 	public String view() {
 
@@ -26,13 +23,6 @@ public class JoinController {
 	}
 
 	@PostMapping
-	public void execute(HttpServletResponse res, UserVo vo) throws Exception {
-
-		if (userService.findByUserId(vo.getUserId()) != null) {
-			// ing...
-		}
-
-		userService.save(vo);
-		res.sendRedirect("/login");
+	public void execute(HttpServletResponse res, UserEntity vo) throws Exception {
 	}
 }

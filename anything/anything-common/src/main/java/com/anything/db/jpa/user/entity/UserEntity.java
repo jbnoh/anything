@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "user")
-public class UserVo {
+public class UserEntity {
 
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int seq;
